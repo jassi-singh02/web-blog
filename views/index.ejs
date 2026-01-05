@@ -1,5 +1,5 @@
 <!-- Don't forget to include a header and footer file here -->
-
+<%- include("partials/header.ejs") %>
 
 <form action="/submit" method="POST">
     <label for = "Title">Title:</label> <br>
@@ -8,3 +8,5 @@
     <input type="text" id="Content" name="Content"><br><br>
     <input type="submit" value="Submit">
 </form>
+
+<%- include("partials/footer.ejs") %>
