@@ -7,15 +7,17 @@ const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+let title = "";
+let content = "";
+
 app.get("/", (req, res) => {
-  res.render("index.ejs");
+  res.render("index.ejs", { title, content});
 });
 
 app.post("/submit", (req, res) => {
-  const title = req.body.Title;
-  const content = req.body.Content;
-  console.log(`Title: ${title}, Content: ${content}`);
-  res.send("Form submitted successfully!");
+  title = req.body.Title;
+  content = req.body.Content;
+  res.redirect("/");
 });
 
 app.listen(port, () => {
