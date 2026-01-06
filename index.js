@@ -14,6 +14,8 @@ app.get("/", (req, res) => {
   res.render("index.ejs", { title, content});
 });
 
+
+// Next is def adding the feature to post multiple blog entries with a list variable instead
 app.post("/submit", (req, res) => {
   title = req.body.Title;
   content = req.body.Content;
