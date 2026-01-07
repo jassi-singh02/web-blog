@@ -1,4 +1,29 @@
 <!-- Don't forget to include a header and footer file here -->
+
+<%
+// NEXT STEPS FOR EJS:
+//
+// 1) Switch from titleList/contentList to `posts` (array of objects)
+//    Example loop:
+//      <% posts.forEach(post => { %>
+//        <h2><%= post.title %></h2>
+//        <p><%= post.content %></p>
+//
+//        <!-- Delete button -->
+//        <form action="/posts/<%= post.id %>/delete" method="POST">
+//          <button type="submit">Delete</button>
+//        </form>
+//
+//        <!-- Edit link -->
+//        <a href="/posts/<%= post.id %>/edit">Edit</a>
+//
+//      <% }) %>
+//
+// 2) Change Content input to textarea:
+//    <textarea id="Content" name="Content" rows="6"></textarea>
+%>
+
+
 <%- include("partials/header.ejs") %>
 
 <form action="/submit" method="POST">
@@ -9,9 +34,11 @@
     <input type="submit" value="Submit">
 </form>
 
-<% if (locals.title && locals.content) { %>
-<h1><%= title %></h1>
-<p><%= content %></p>
+<% if (locals.titleList && locals.contentList) { %>
+  <% for (let i = 0; i < titleList.length; i++) { %>
+    <h1><%= titleList[i] %></h1>
+    <p><%= contentList[i] %></p>
+  <% } %>
 <% } %>
 
 <%- include("partials/footer.ejs") %>
