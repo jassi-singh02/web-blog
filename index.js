@@ -1,29 +1,4 @@
 /**
- * NEXT STEPS (Blog App Roadmap)
- *
- * 1) CLEAN DATA MODEL
- *    - Replace titleList[] and contentList[] with ONE array of post objects:
- *        let posts = [];
- *        // Each post should look like:
- *        // { id: "some-unique-id", title: "Hello", content: "Body text", createdAt: Date }
- *
- * 2) ADD UNIQUE IDS (so edit/delete targets the right post)
- *    - Use Node's built-in crypto module (NO npm install needed):
- *        import crypto from "crypto";
- *        const id = crypto.randomUUID();   // best option if Node supports it
- *
- *    - If randomUUID is not available, fallback:
- *        const id = crypto.randomBytes(16).toString("hex");
- *
- * 3) UPDATE ROUTES TO USE OBJECTS
- *    - In POST /submit:
- *        const title = req.body.Title;
- *        const content = req.body.Content;
- *        posts.push({ id, title, content, createdAt: new Date() });
- *
- *    - In GET /:
- *        res.render("index.ejs", { posts });
- *
  * 4) ADD DELETE FEATURE (easiest CRUD next)
  *    - Add a route:
  *        app.post("/posts/:id/delete", (req, res) => {
@@ -60,6 +35,7 @@
 
 import express from "express";
 import bodyParser from "body-parser";
+import crypto from "crypto";
 
 const app = express();
 const port = 3000;
@@ -67,20 +43,26 @@ const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let title = "";
-let content = "";
-let titleList = [];
-let contentList = [];
+let posts = [];
 
 app.get("/", (req, res) => {
-  res.render("index.ejs", { titleList, contentList});
+  res.render("index.ejs", { posts });
 });
 
+
+// Next step is to create a delete route here
 app.post("/submit", (req, res) => {
-  title = req.body.Title;
-  content = req.body.Content;
-  titleList.push(title);
-  contentList.push(content);
+  const title = req.body.Title;
+  const content = req.body.Content;
+  
+  const newPost = {
+    id: crypto.randomUUID(),
+    title: title,
+    content: content,
+    createdAt: new Date()
+  }
+
+  posts.push(newPost);
   res.redirect("/");
 });
 
